@@ -1,0 +1,10 @@
+node_modules/
+out/
+.remotion/
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+# hasil kerja per video — jangan ikut di-commit
+*.narasi.wav
+words*.json

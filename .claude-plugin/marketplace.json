@@ -1,0 +1,12 @@
+{
+  "name": "edukasi-video",
+  "description": "Skill Claude Code untuk membuat video edukasi dengan Remotion atau HyperFrames.",
+  "owner": { "name": "belajarbareng437" },
+  "plugins": [
+    {
+      "name": "edukasi-video",
+      "source": "./",
+      "description": "edit-video-endorse: dari video talking-head mentah jadi video tips vertikal bergaya, dirender dengan Remotion atau HyperFrames."
+    }
+  ]
+}

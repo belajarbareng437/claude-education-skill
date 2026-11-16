@@ -1,0 +1,29 @@
+{
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "duration": 24,
+  "video": "",
+  "glue": ["Search Console"],
+  "captions": [
+    { "start": 2.8, "end": 3.9, "words": [ { "text": "Cara", "start": 2.8, "end": 3.1 }, { "text": "pertama", "start": 3.15, "end": 3.6 } ] },
+    { "start": 5.6, "end": 6.8, "words": [ { "text": "daftarkan", "start": 5.6, "end": 6.0 }, { "text": "website", "start": 6.05, "end": 6.4 }, { "text": "kamu", "start": 6.45, "end": 6.7 } ] },
+    { "start": 6.9, "end": 8.2, "words": [ { "text": "ke", "start": 6.9, "end": 7.0 }, { "text": "Search Console", "start": 7.05, "end": 7.9 } ] },
+    { "start": 13.6, "end": 14.8, "words": [ { "text": "Lalu", "start": 13.6, "end": 13.9 }, { "text": "pastikan", "start": 13.95, "end": 14.4 }, { "text": "judulnya", "start": 14.45, "end": 14.8 } ] },
+    { "start": 14.9, "end": 16.0, "words": [ { "text": "jelas", "start": 14.9, "end": 15.2 }, { "text": "dan", "start": 15.25, "end": 15.4 }, { "text": "spesifik!", "start": 15.45, "end": 15.9 } ] }
+  ],
+  "framing": [
+    { "start": 5.5, "end": 9.0, "zoom": 1.35, "focusY": 0.35 }
+  ],
+  "scenes": [
+    { "type": "serifCard", "start": 0, "end": 2.6, "kicker": "3 cara", "title": "Website kamu muncul di Google", "highlight": "Google" },
+    { "type": "pointTitle", "start": 2.8, "end": 5.4, "number": 1, "title": "Daftar Search Console", "icons": ["search", "chart", "check"] },
+    { "type": "floatIcons", "start": 6.0, "end": 8.4, "icons": ["globe", "phone", "star"] },
+    { "type": "fullscreen", "start": 8.6, "end": 11.0, "bg": "ink", "content": { "kind": "count", "value": 87, "suffix": "%", "label": "klik ada di halaman 1" } },
+    { "type": "fullscreen", "start": 11.2, "end": 13.4, "bg": "lime", "content": { "kind": "list", "title": "Judul yang baik", "rows": [ { "text": "Ada kata kunci", "mark": "check" }, { "text": "Singkat & jelas", "mark": "check" }, { "text": "Asal-asalan", "mark": "cross" } ] } },
+    { "type": "fullscreen", "start": 16.2, "end": 18.2, "bg": "paper", "content": { "kind": "chips", "title": "Kata kunci", "chips": ["jasa", "murah", "terdekat", "2026"], "highlight": 2 } },
+    { "type": "fullscreen", "start": 18.4, "end": 20.0, "bg": "navy", "content": { "kind": "toggle", "label": "Indeks halaman", "off": "Belum", "on": "Aktif" } },
+    { "type": "sheet", "start": 20.0, "end": 22.0, "title": "Ringkasan", "rows": ["Daftar Search Console", "Optimasi judul", "Kirim sitemap"] },
+    { "type": "serifCard", "start": 22.0, "end": 24.0, "kicker": "ingat", "title": "Konsisten itu kuncinya", "highlight": "Konsisten" }
+  ]
+}
