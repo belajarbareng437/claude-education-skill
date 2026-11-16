@@ -34,7 +34,19 @@ Path video bisa berisi spasi atau tanda kutip — ambil apa adanya dan cek dulu 
 
 `SKILL_DIR` di bawah = folder skill ini (baris "Base directory for this skill" saat skill dimuat;
 bisa di `~/.claude/skills/` atau di cache plugin). Jangan menulis hasil kerja ke dalam `SKILL_DIR` —
-buat folder kerja terpisah. Perintah Python: `python` di Windows, `python3` di macOS/Linux. Sebelum mendesain adegan,
+buat folder kerja terpisah. Perintah Python: `python` di Windows, `python3` di macOS/Linux.
+
+## Lingkungan: Claude Code atau Claude Desktop (chat)
+
+- **Claude Code** (terminal, IDE, atau tab *Code* di Claude Desktop): punya akses ke file dan alat di komputer
+  user — jalankan alur kerja penuh di bawah.
+- **Chat Claude Desktop / claude.ai** (skill diunggah sebagai ZIP, berjalan di sandbox eksekusi kode):
+  tidak bisa membuka path di komputer user. Minta user **mengunggah** videonya ke chat (file besar sering
+  gagal — sarankan klip ≤ 1–2 menit). Sandbox mungkin tidak punya ffmpeg, Chrome, atau akses internet penuh:
+  cek dulu (`ffmpeg -version`, `node --version`). Bila render tidak mungkin, kerjakan yang bisa —
+  transkrip (atau minta user menempelkan naskahnya), susun `timeline.json`, buat `index.html` HyperFrames —
+  lalu berikan file-file itu untuk diunduh dan dirender user di komputernya
+  (`npx hyperframes render` atau proyek Remotion). Katakan terus terang langkah mana yang tidak bisa di sandbox. Sebelum mendesain adegan,
 baca `references/style.md` (gaya visual) dan `references/timeline.md` (format data).
 
 ## Persyaratan
