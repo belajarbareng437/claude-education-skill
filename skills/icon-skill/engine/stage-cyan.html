@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>stage-cyan</title>
+<style>
+  /* Gaya ref1-bicara-ke-kamera-2: teks kinetik 2 ukuran (kecil putih + kata kunci besar cyan),
+     cutaway layar hitam berobjek, pill putih ber-ikon, punch-in zoom. */
+  @font-face { font-family: "InterV"; src: url("__FONT__") format("truetype"); font-weight: 100 900; }
+  @font-face { font-family: "Metro"; src: url("__FONTB__") format("opentype"); font-weight: 900; }
+  :root {
+    --cy: #22C9F4; --t1: #FFFFFF;
+    --gcy: linear-gradient(180deg, #8AF0FF 0%, #2FD3F7 42%, #0FA6DE 100%);
+  }
+  html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+  #stage { position: relative; width: 1080px; height: 1920px; overflow: hidden;
+           font-family: "InterV", Inter, "Segoe UI", sans-serif; color: var(--t1); }
+  #bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; will-change: transform; }
+  .abs { position: absolute; }
+  .vig { inset: 0; background: radial-gradient(ellipse 90% 75% at 50% 40%, rgba(0,0,0,0) 55%, rgba(0,0,0,.38) 100%); }
+  .scrim { left: 0; right: 0; top: 0; height: 520px;
+           background: linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.22) 55%, rgba(0,0,0,0)); }
+  #mid { left: 0; right: 0; top: 0; height: 900px;
+         background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,.42) 40%, rgba(0,0,0,.42) 65%, rgba(0,0,0,0)); }
+  .w { display: inline-block; will-change: transform, opacity, filter; white-space: pre; }
+  .sh { text-shadow: 0 3px 18px rgba(0,0,0,.6), 0 1px 3px rgba(0,0,0,.55); }
+  .big { font-family: "Metro", "InterV", sans-serif; font-weight: 900; letter-spacing: -0.02em; line-height: .95;
+         white-space: nowrap; }
+  .gcy { background-image: var(--gcy); -webkit-background-clip: text; background-clip: text; color: transparent;
+         filter: drop-shadow(0 4px 14px rgba(0,0,0,.55)) drop-shadow(0 0 1px rgba(0,40,60,.8)); text-shadow: none; }
+  /* kata per-kata (hook/CTA) punya layer sendiri -> gradasi dipasang di tiap kata */
+  .gcy .w { background-image: var(--gcy); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: none; }
+  .sm { font-size: 50px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.05; }
+
+  /* caption kinetik */
+  .cap { left: 0; width: 1080px; display: flex; justify-content: center; }
+  .cap .box { display: inline-flex; flex-direction: column; align-items: flex-start; }
+  .cap .row { display: flex; align-items: center; gap: 22px; }
+  .cap .tile { width: 112px; height: 112px; border-radius: 28px; background: #fff; display: grid; place-items: center;
+               font-size: 66px; box-shadow: 0 10px 30px rgba(0,0,0,.45); font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif; }
+
+  /* hook atas */
+  #hook { left: 0; width: 1080px; top: 150px; display: flex; justify-content: center; }
+  #hook .box { display: inline-flex; flex-direction: column; }
+  #hook .s1 { align-self: flex-start; font-size: 54px; font-weight: 600; margin-left: 8px; }
+  #hook .b { font-size: 176px; }
+  #hook .s2 { align-self: flex-end; font-size: 54px; font-weight: 600; margin-top: -6px; }
+
+  /* cutaway hitam */
+  #cut { inset: 0; background: radial-gradient(ellipse 70% 50% at 50% 42%, #24282c 0%, #0b0c0e 55%, #000 100%); }
+  #cut .obj { left: 0; width: 1080px; top: 470px; height: 520px; display: grid; place-items: center;
+              font-size: 400px; line-height: 1; font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
+              filter: drop-shadow(0 40px 50px rgba(0,0,0,.85)) drop-shadow(0 0 60px rgba(60,200,255,.12)); }
+  #cut .dust { position: absolute; border-radius: 50%; background: #fff; }
+  #cut .txt { left: 0; width: 1080px; top: 1060px; display: flex; justify-content: center; }
+
+  /* recap pill */
+  #dim { inset: 0; background: rgba(0,0,0,.5); }
+  #recap { left: 0; width: 1080px; top: 860px; display: flex; flex-direction: column; align-items: center; }
+  #recap .hd { font-size: 64px; font-weight: 600; color: var(--cy); letter-spacing: -0.01em; margin-bottom: 30px; }
+  #recap .grid { display: grid; grid-template-columns: 430px 430px; gap: 22px 26px; }
+  .pill { height: 92px; border-radius: 26px; background: #fff; color: #111; display: flex; align-items: center;
+          gap: 16px; padding: 0 26px; font-size: 38px; font-weight: 700; letter-spacing: -0.01em;
+          box-shadow: 0 10px 26px rgba(0,0,0,.45); box-sizing: border-box; }
+  .pill .ic { font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif; font-size: 42px; }
+  #cta { left: 0; width: 1080px; top: 1440px; display: flex; flex-direction: column; align-items: center; }
+  #cta .s { font-size: 46px; font-weight: 600; }
+  #cta .b { font-size: 120px; margin-top: 6px; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <img id="bg" alt="">
+  <div class="abs vig"></div>
+  <div class="abs scrim" id="scrim"></div>
+  <div class="abs" id="mid"></div>
+</div>
+<script>
+const PLAN = /*PLAN*/null;
+const FPS = PLAN.fps;
+const stage = document.getElementById("stage");
+const bg = document.getElementById("bg");
+const clamp = (x) => Math.max(0, Math.min(1, x));
+const eo = (x) => 1 - Math.pow(1 - x, 3);
+const ei = (x) => x * x;
+const back = (x) => { const c = 1.9; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+function el(tag, cls, parent, html) {
+  const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html;
+  (parent || stage).appendChild(e); return e;
+}
+const esc = (s) => s.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+
+function life(e, t, a, b, o = {}) {
+  const inD = o.inD ?? 0.25, outD = o.outD ?? 0.14, dy = o.dy ?? 24, dx = o.dx ?? 0, blur = o.blur ?? 8;
+  const pin = eo(clamp((t - a) / inD));
+  const pout = ei(clamp((t - b) / outD));
+  const op = pin * (1 - pout) * (o.max ?? 1);
+  if (op <= 0.001) { e.style.visibility = "hidden"; return 0; }
+  e.style.visibility = "";
+  e.style.opacity = op.toFixed(3);
+  const sc = o.pop ? (o.from ?? 0.6) + (1 - (o.from ?? 0.6)) * back(clamp((t - a) / (inD * 1.2))) : 1;
+  e.style.transform = `translate(${((1 - pin) * dx).toFixed(2)}px, ${((1 - pin) * dy).toFixed(2)}px) scale(${sc.toFixed(4)})`;
+  const bl = (1 - pin) * blur + pout * blur;
+  if (!o.noFilter) e.style.filter = bl > 0.05 ? `blur(${bl.toFixed(2)}px)` : "";
+  return op;
+}
+function words(parent, text) {
+  return text.split(" ").map((w, i) => el("span", "w", parent, esc((i ? " " : "") + w)));
+}
+// kecilkan font kata besar sampai muat
+function fit(e, max, size) {
+  e.style.fontSize = size + "px";
+  while (e.scrollWidth > max && size > 60) { size -= 4; e.style.fontSize = size + "px"; }
+  return size;
+}
+
+// ---------- bangun caption ----------
+// chunk: {small, big, at, start, end, icon?}. Kata kecil tampil redup lalu terang satu per satu,
+// kata besar cyan "pop" tepat saat diucapkan.
+function makeCap(ch, cls, parent, big = 150) {
+  const root = el("div", "abs cap " + (parent ? "" : "capm"), parent || stage);
+  const box = el("div", "box sh", root);
+  const sm = el("div", "sm", box); const sw = words(sm, ch.small);
+  const row = el("div", "row", box);
+  const bw = el("div", "big " + cls, row, esc(ch.big));
+  let tile = null;
+  if (ch.icon) tile = el("div", "tile", row, ch.icon);
+  return { ch, root, sm, sw, bw, tile, big };
+}
+const caps = [];
+PLAN.points.forEach((p) => {
+  caps.push({ ...makeCap(p.weak, "", null), kind: "weak", p });
+  if (!p.strong.cut) caps.push({ ...makeCap({ ...p.strong, icon: p.strong.icon }, "gcy", null), kind: "strong", p });
+});
+
+// hook
+const HK = PLAN.hook;
+const hook = el("div", "abs", stage); hook.id = "hook";
+const hbox = el("div", "box sh", hook);
+const hS1 = el("div", "s1", hbox, esc(HK.small1));
+const hB = el("div", "big gcy b", hbox); const hBW = words(hB, HK.big);
+const hS2 = el("div", "s2", hbox, esc(HK.small2));
+
+// cutaway
+const cut = el("div", "abs", stage); cut.id = "cut";
+const dust = Array.from({ length: 46 }, (_, k) => {
+  const d = el("div", "dust", cut);
+  const r = (n) => { const x = Math.sin(k * 127.1 + n * 311.7) * 43758.5453; return x - Math.floor(x); };
+  const s = 2 + r(1) * 5;
+  Object.assign(d.style, { width: s + "px", height: s + "px", left: r(2) * 1080 + "px", top: r(3) * 1920 + "px", opacity: 0.08 + r(4) * 0.3 });
+  return { d, vx: (r(5) - 0.5) * 30, vy: -10 - r(6) * 25, x: r(2) * 1080, y: r(3) * 1920 };
+});
+const cobj = el("div", "abs obj", cut);
+const ctxt = el("div", "abs txt", cut);
+const cutCaps = PLAN.points.filter((p) => p.strong.cut).map((p) => ({ p, c: makeCap({ ...p.strong, icon: null }, "gcy", ctxt) }));
+cutCaps.forEach((C) => { C.c.root.style.position = "relative"; C.c.root.style.position = "absolute"; C.c.root.style.top = "0"; });
+
+// recap + CTA
+const R = PLAN.recap;
+const dim = el("div", "abs", stage); dim.id = "dim";
+const recap = el("div", "abs", stage); recap.id = "recap";
+const rHd = el("div", "hd sh", recap, esc(R.title));
+const grid = el("div", "grid", recap);
+const pills = R.items.map((it) => el("div", "pill", grid, `<span class="ic">${it.icon}</span>${esc(it.text)}`));
+const cta = el("div", "abs sh", stage); cta.id = "cta";
+const cS = el("div", "s", cta, esc(PLAN.cta.small));
+const cB = el("div", "big gcy b", cta); const cBW = words(cB, PLAN.cta.big);
+
+const scrim = document.getElementById("scrim"), mid = document.getElementById("mid");
+
+// ukuran font kata besar (sekali, setelah font termuat)
+function layout() {
+  for (const C of caps) fit(C.bw, C.tile ? 820 : 960, C.big);
+  for (const C of cutCaps) fit(C.c.bw, 960, 150);
+  fit(hB, 1000, 176);
+}
+
+// ---------- zoom ----------
+function zoomAt(t) {
+  for (const p of PLAN.points) {
+    const last = p === PLAN.points.at(-1);
+    if (t >= p.start && (t < p.end || last)) {
+      let z = p.base;
+      if (!p.strong.cut) z += 0.13 * eo(clamp((t - p.kuatAt) / 0.12));
+      return { z, o: p.face, p };
+    }
+  }
+  return { z: 1, o: [540, 600], p: null };
+}
+
+function drawCap(C, t, a, b, y) {
+  const v = life(C.root, t, a, b, { dy: 0, blur: 0, inD: 0.01, outD: 0.12, noFilter: true });
+  if (!v) return 0;
+  C.root.style.top = y + "px";
+  const ch = C.ch, n = C.sw.length;
+  life(C.sm, t, a, b + 9, { dy: 16, blur: 6, inD: 0.18 });
+  C.sw.forEach((w, i) => {
+    const wt = a + 0.05 + (Math.max(0.15, ch.at - a - 0.15)) * (i / Math.max(1, n));
+    w.style.opacity = (0.4 + 0.6 * eo(clamp((t - wt) / 0.12))).toFixed(3);
+  });
+  life(C.bw, t, ch.at - 0.04, b + 9, { pop: true, from: 0.55, dy: 20, blur: 10, inD: 0.26 });
+  if (C.tile) life(C.tile, t, ch.at + 0.12, b + 9, { pop: true, from: 0.2, dy: 0, blur: 0, inD: 0.3 });
+  return v;
+}
+
+// ---------- render ----------
+function draw(t) {
+  const fi = Math.max(0, Math.min(PLAN.frames - 1, Math.round(t * FPS)));
+  const { z, o, p: cur } = zoomAt(t);
+  bg.style.transformOrigin = `${o[0]}px ${o[1]}px`;
+  bg.style.transform = `scale(${z.toFixed(4)})`;
+  const chinY = o[1] + (PLAN.chin[fi] - o[1]) * z;
+  const capY = Math.round(Math.max(820, Math.min(1260, chinY + 70)));
+
+  // caption
+  let anyCap = 0;
+  for (const C of caps) {
+    const p = C.p, last = p === PLAN.points.at(-1);
+    let a, b;
+    if (C.kind === "weak") { a = p.start + 0.02; b = p.kuatAt - 0.08; }
+    else { a = p.kuatAt; b = last ? PLAN.recap.start - 0.05 : p.end - 0.06; }
+    if (t < a - 0.05 || t > b + 0.3) { C.root.style.visibility = "hidden"; continue; }
+    anyCap = Math.max(anyCap, drawCap(C, t, a, b, capY));
+  }
+  mid.style.top = (capY - 330) + "px";
+  mid.style.opacity = (anyCap * 0.9).toFixed(3);
+
+  // hook
+  const he = HK.end;
+  let top = 0;
+  top = Math.max(top, life(hS1, t, 0.0, he, { dx: -30, dy: 0, blur: 6 }));
+  hBW.forEach((w, i) => life(w, t, 0.08 + i * 0.1, he, { pop: true, from: 0.5, dy: 30, blur: 12, inD: 0.3 }));
+  life(hS2, t, 0.45, he, { dx: 30, dy: 0, blur: 6 });
+  scrim.style.opacity = top.toFixed(3);
+
+  // cutaway (hard cut masuk/keluar, isi bergerak)
+  const CC = cutCaps.find((C) => t >= C.p.kuatAt && t < C.p.end - 0.02);
+  if (CC) {
+    cut.style.visibility = "";
+    const p = CC.p, lt = t - p.kuatAt;
+    if (cobj._for !== p) { cobj._for = p; cobj.textContent = p.strong.icon; }
+    const k = back(clamp(lt / 0.4));
+    cobj.style.transform = `translateY(${(Math.sin(lt * 2.2) * 14).toFixed(1)}px) rotate(${(-10 + 10 * eo(clamp(lt / 0.6)) + Math.sin(lt * 1.6) * 3).toFixed(2)}deg) scale(${(0.6 + 0.4 * k + lt * 0.03).toFixed(4)})`;
+    dust.forEach((D) => {
+      D.d.style.transform = `translate(${(D.vx * lt).toFixed(1)}px, ${(D.vy * lt).toFixed(1)}px)`;
+    });
+    cutCaps.forEach((C) => {
+      if (C !== CC) { C.c.root.style.visibility = "hidden"; return; }
+      drawCap(C.c, t, p.kuatAt + 0.06, p.end + 9, 0);
+    });
+  } else cut.style.visibility = "hidden";
+
+  // recap + CTA
+  const rs = R.start;
+  const dv = life(dim, t, rs, 999, { dy: 0, blur: 0, inD: 0.3, noFilter: true });
+  bg.style.filter = dv > 0.01 ? `blur(${(dv * 7).toFixed(2)}px)` : "";
+  life(rHd, t, rs + 0.05, 999, { dy: 20, blur: 6 });
+  pills.forEach((pl, i) => life(pl, t, rs + 0.25 + i * R.step, 999, { pop: true, from: 0.5, dy: 18, blur: 6, inD: 0.28 }));
+  const cs = rs + 0.25 + pills.length * R.step + 0.15;
+  life(cS, t, cs, 999, { dy: 16, blur: 6 });
+  cBW.forEach((w, i) => life(w, t, cs + 0.1 + i * 0.1, 999, { pop: true, from: 0.5, dy: 24, blur: 10, inD: 0.3 }));
+}
+
+let lastFrame = -1;
+window.renderFrame = async (i) => {
+  if (i !== lastFrame) {
+    bg.src = "frames/" + String(i + 1).padStart(5, "0") + ".jpg";
+    await bg.decode();
+    lastFrame = i;
+  }
+  draw(i / FPS);
+  await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+  return i;
+};
+window.ready = document.fonts.ready.then(async () => {
+  await document.fonts.load('900 100px "Metro"'); await document.fonts.load('600 40px "InterV"');
+  layout();
+  return document.fonts.check('900 40px "Metro"');
+});
+</script>
+</body>
+</html>

@@ -1,10 +1,25 @@
 {
   "name": "education-skill",
-  "version": "2.0.0",
-  "description": "Skill Claude Code untuk membuat video edukasi/tips vertikal gaya \"endorse\" (aksen lime, subtitle gaya Apple, infografis layar penuh, SFX) dengan Remotion atau HyperFrames.",
-  "author": { "name": "belajarbareng437" },
+  "version": "2.1.0",
+  "description": "Dua skill Claude Code untuk video edukasi vertikal: /education-skill (gaya endorse lime, Remotion/HyperFrames) dan /icon-skill (gaya cyan ber-ikon, teks kinetik, cutaway, rekap pill).",
+  "author": {
+    "name": "belajarbareng437"
+  },
   "homepage": "https://github.com/belajarbareng437/claude-education-skill",
   "repository": "https://github.com/belajarbareng437/claude-education-skill",
   "license": "MIT",
-  "keywords": ["video", "remotion", "hyperframes", "shorts", "reels", "tiktok", "edukasi", "subtitle", "infografis"]
+  "keywords": [
+    "cyan",
+    "edukasi",
+    "hyperframes",
+    "ikon",
+    "infografis",
+    "kinetic-typography",
+    "reels",
+    "remotion",
+    "shorts",
+    "subtitle",
+    "tiktok",
+    "video"
+  ]
 }

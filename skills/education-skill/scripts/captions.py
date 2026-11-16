@@ -7,7 +7,7 @@ Pemakaian:
 - Istilah di `glue` (dari timeline.json dan --glue) tidak akan terbelah.
 - Pecah di tanda baca (. , ? ! : ;) dan di jeda > 0,45 dtk.
 - Titik/koma di akhir kata dibuang dari tampilan; ? dan ! dipertahankan.
-- --fix memperbaiki kata yang salah dengar (tidak peka huruf besar/kecil), mis. --fix "dikarwin=Didik Arwinsyah".
+- --fix memperbaiki kata yang salah dengar (tidak peka huruf besar/kecil), mis. --fix "serc=Search" --fix "gugel=Google".
 """
 import argparse
 import json
