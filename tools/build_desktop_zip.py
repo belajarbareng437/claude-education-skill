@@ -1,11 +1,11 @@
 """Bangun ZIP skill untuk diunggah ke Claude Desktop / claude.ai (Customize > Skills > Upload a skill).
 
 Pemakaian (dari root repo):  python tools/build_desktop_zip.py
-Hasil:                       dist/edukasi-video-endorse.zip
+Hasil:                       dist/education-skill.zip
 
 Kenapa perlu ZIP terpisah dari skill Claude Code?
 - Unggahan skill di aplikasi Claude membatasi deskripsi maks. 200 karakter (Claude Code tidak).
-- Nama skill yang memuat kata "claude"/"anthropic" bisa ditolak, jadi di Desktop namanya "edukasi-video-endorse".
+- Nama skill sama dengan di Claude Code: "education-skill".
 - Folder di dalam ZIP harus sama dengan nama skill dan berada di akar ZIP.
 - node_modules, out/ dan file sementara tidak ikut.
 """
@@ -15,8 +15,8 @@ import sys
 import zipfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SRC = os.path.join(ROOT, "skills", "claude-education-skill")
-NAME = "edukasi-video-endorse"
+SRC = os.path.join(ROOT, "skills", "education-skill")
+NAME = "education-skill"
 DESCRIPTION = (
     "Edit video talking-head jadi video tips vertikal gaya endorse (aksen lime, subtitle gaya Apple, "
     "infografis layar penuh, SFX) dan render dengan Remotion atau HyperFrames."

@@ -1,5 +1,5 @@
 ---
-name: claude-education-skill
+name: education-skill
 description: Edit video talking-head mentah (vertikal 9:16 atau 16:9, bahasa Indonesia) jadi video tips/edukasi bergaya "endorse" — aksen hijau lime, kartu pembuka/penutup serif di kertas bertitik, subtitle gaya Apple 2–3 kata (kata muncul satu per satu, blur ke tajam), judul poin pil kaca + ikon mengapung, infografis layar penuh (angka menghitung, daftar ✓/✗, chip, toggle, split, bottom-sheet), framing lebar/close-up bergantian, SFX swoosh/pop/tik tanpa musik — dan merendernya dengan Remotion atau HyperFrames (HTML + GSAP). Gunakan setiap kali user ingin mengedit/membuat video "gaya endorse", video review/promosi produk atau jasa, video "N cara/tips/langkah", infografis layar penuh, subtitle gaya Apple, atau menyebut Remotion/HyperFrames untuk video talking-head — walaupun kata "skill" tidak disebut.
 argument-hint: "<video> [remotion|hyperframes] [topik/catatan] | demo | cek alat"
 ---
@@ -16,7 +16,7 @@ Dari satu video mentah orang bicara ke kamera, hasilkan video tips bergaya denga
 
 Kalau user tidak menyebut mesin, pakai **Remotion**. Bicara ke user dalam **Bahasa Indonesia**, singkat dan non-teknis.
 
-## Saat dipanggil dengan `/claude-education-skill`
+## Saat dipanggil dengan `/education-skill`
 
 Argumen dari user: `$ARGUMENTS`
 

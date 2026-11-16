@@ -15,7 +15,7 @@ bergantian, plus SFX swoosh/pop/tik tanpa musik.
 
 ```
 .claude-plugin/                manifest plugin + marketplace (untuk /plugin install)
-skills/claude-education-skill/
+skills/education-skill/
 ├── SKILL.md                   instruksi untuk Claude (alur kerja, aturan gaya)
 ├── references/
 │   ├── style.md               panduan visual: warna, huruf, ukuran, animasi, ritme
@@ -39,14 +39,14 @@ skills/claude-education-skill/
 Setelah skill terpasang, cek semuanya dengan mengetik di Claude Code:
 
 ```
-/claude-education-skill cek alat
+/education-skill cek alat
 ```
 
-(atau dari folder hasil clone: `python skills/claude-education-skill/scripts/doctor.py`)
+(atau dari folder hasil clone: `python skills/education-skill/scripts/doctor.py`)
 
 ## Cara instal
 
-Pilih **salah satu** opsi. Keduanya membuat skill bisa dipanggil dengan **`/claude-education-skill`**.
+Pilih **salah satu** opsi. Keduanya membuat skill bisa dipanggil dengan **`/education-skill`**.
 
 > **Pakai aplikasi Claude Desktop (Mac/Windows)?** Ikuti
 > [Tutorial instal di Claude Desktop](#tutorial-instal-di-claude-desktop-mac--windows) — langkah demi langkah.
@@ -57,35 +57,40 @@ Di terminal:
 
 ```bash
 claude plugin marketplace add belajarbareng437/claude-education-skill
-claude plugin install edukasi-video@edukasi-video
+claude plugin install education-skill@education-skill
 ```
 
 Atau dari dalam Claude Code:
 
 ```
 /plugin marketplace add belajarbareng437/claude-education-skill
-/plugin install edukasi-video@edukasi-video
+/plugin install education-skill@education-skill
 ```
 
 Lalu mulai ulang Claude Code (atau ketik `/reload-plugins`).
 
-> Kenapa nama pluginnya `edukasi-video`, bukan `claude-education-skill`? Claude Code melarang nama **plugin**
-> yang diawali `claude-` (dicadangkan untuk Anthropic). Nama **skill**-nya tetap `claude-education-skill`,
-> jadi perintahnya tetap `/claude-education-skill`. Bentuk lengkapnya `/edukasi-video:claude-education-skill`
-> — pakai bentuk ini kalau ada skill lain bernama sama.
+> Nama plugin dan nama skill sama-sama `education-skill`, jadi perintahnya **`/education-skill`**.
+> Bentuk lengkapnya `/education-skill:education-skill` — pakai ini hanya bila ada skill lain bernama sama.
 
 Memperbarui ke versi terbaru:
 
 ```bash
-claude plugin marketplace update edukasi-video
-claude plugin update edukasi-video@edukasi-video
+claude plugin marketplace update education-skill
+claude plugin update education-skill@education-skill
+```
+
+Pernah memasang versi lama bernama `edukasi-video` (sebelum v2.0.0)? Hapus dulu, lalu pasang ulang seperti di atas:
+
+```bash
+claude plugin uninstall edukasi-video@edukasi-video
+claude plugin marketplace remove edukasi-video
 ```
 
 Menghapus:
 
 ```bash
-claude plugin uninstall edukasi-video@edukasi-video
-claude plugin marketplace remove edukasi-video
+claude plugin uninstall education-skill@education-skill
+claude plugin marketplace remove education-skill
 ```
 
 ### Opsi B — salin folder skill secara manual
@@ -98,14 +103,14 @@ git clone https://github.com/belajarbareng437/claude-education-skill.git
 
 ```bash
 mkdir -p ~/.claude/skills
-cp -r claude-education-skill/skills/claude-education-skill ~/.claude/skills/
+cp -r claude-education-skill/skills/education-skill ~/.claude/skills/
 ```
 
 **Windows (PowerShell)**
 
 ```powershell
 New-Item -ItemType Directory -Force "$env:USERPROFILE\.claude\skills" | Out-Null
-Copy-Item -Recurse claude-education-skill\skills\claude-education-skill "$env:USERPROFILE\.claude\skills\"
+Copy-Item -Recurse claude-education-skill\skills\education-skill "$env:USERPROFILE\.claude\skills\"
 ```
 
 Untuk satu proyek saja, salin ke `<proyek>/.claude/skills/` alih-alih folder home.
@@ -120,7 +125,7 @@ Aplikasi Claude Desktop punya dua tempat memakai skill. Pilih sesuai kebutuhan:
 | Untuk | Edit video sungguhan sampai jadi MP4 | Merencanakan adegan, membuat `timeline.json` / `index.html` |
 | Akses file di komputer | Ya | Tidak — video harus diunggah ke chat |
 | Bisa render video | Ya (Remotion / HyperFrames di komputer Anda) | Biasanya tidak (sandbox terbatas); hasil dirender sendiri di komputer |
-| Cara memanggil | `/claude-education-skill` | Minta dengan bahasa biasa, mis. "edit video ini gaya endorse" |
+| Cara memanggil | `/education-skill` | Minta dengan bahasa biasa, mis. "edit video ini gaya endorse" |
 
 ---
 
@@ -144,14 +149,14 @@ jadi skill cukup dipasang sekali.
    cd ~/Downloads
    git clone https://github.com/belajarbareng437/claude-education-skill.git
    mkdir -p ~/.claude/skills
-   cp -r claude-education-skill/skills/claude-education-skill ~/.claude/skills/
+   cp -r claude-education-skill/skills/education-skill ~/.claude/skills/
    ```
 3. **Tutup Claude Desktop sepenuhnya** (Cmd + Q), lalu buka lagi.
 4. Klik tab **Code**, pilih folder kerja (mis. folder tempat video Anda), lalu ketik:
    ```
-   /claude-education-skill cek alat
+   /education-skill cek alat
    ```
-   Semua baris harus `OK`. Setelah itu coba `/claude-education-skill demo`.
+   Semua baris harus `OK`. Setelah itu coba `/education-skill demo`.
 
 #### 🪟 Windows
 
@@ -172,16 +177,16 @@ jadi skill cukup dipasang sekali.
    cd $env:USERPROFILE\Downloads
    git clone https://github.com/belajarbareng437/claude-education-skill.git
    New-Item -ItemType Directory -Force "$env:USERPROFILE\.claude\skills" | Out-Null
-   Copy-Item -Recurse -Force claude-education-skill\skills\claude-education-skill "$env:USERPROFILE\.claude\skills\"
+   Copy-Item -Recurse -Force claude-education-skill\skills\education-skill "$env:USERPROFILE\.claude\skills\"
    ```
    Tanpa Git? Buka https://github.com/belajarbareng437/claude-education-skill → tombol hijau **Code** →
-   **Download ZIP** → ekstrak, lalu salin folder `skills\claude-education-skill` ke
+   **Download ZIP** → ekstrak, lalu salin folder `skills\education-skill` ke
    `C:\Users\<nama-anda>\.claude\skills\` lewat File Explorer (ketik `%USERPROFILE%\.claude\skills` di
    address bar; buat foldernya bila belum ada).
 3. **Tutup Claude Desktop sepenuhnya** (klik kanan ikon Claude di system tray → **Quit**), lalu buka lagi.
 4. Klik tab **Code**, pilih folder kerja, lalu ketik:
    ```
-   /claude-education-skill cek alat
+   /education-skill cek alat
    ```
 
 > Sudah memasang Claude Code CLI? Anda juga bisa memakai **Opsi A (plugin)** di atas — hasilnya terbaca
@@ -198,14 +203,14 @@ Langkahnya sama di Mac dan Windows.
 
 1. **Unduh ZIP skill:** buka halaman
    [Releases](https://github.com/belajarbareng437/claude-education-skill/releases/latest) →
-   unduh **`edukasi-video-endorse.zip`**. **Jangan diekstrak.**
-   (Atau buat sendiri dari folder clone: `python tools/build_desktop_zip.py` → `dist/edukasi-video-endorse.zip`.)
+   unduh **`education-skill.zip`**. **Jangan diekstrak.**
+   (Atau buat sendiri dari folder clone: `python tools/build_desktop_zip.py` → `dist/education-skill.zip`.)
 2. Buka Claude Desktop → **Settings** (Mac: Cmd + , · Windows: Ctrl + , atau klik nama Anda di kiri bawah →
    Settings) → **Capabilities** → nyalakan **Code execution and file creation**
    (di tampilan baru bernama **Create and edit files**).
 3. Buka **Customize → Skills** → klik **+** → **Create skill** → **Upload a skill** → pilih
-   `edukasi-video-endorse.zip`.
-4. Pastikan skill **edukasi-video-endorse** muncul dan sakelarnya menyala.
+   `education-skill.zip`.
+4. Pastikan skill **education-skill** muncul dan sakelarnya menyala.
 5. Di chat baru, unggah video (klip pendek, ≤ 1–2 menit) dan tulis misalnya:
    > Edit video ini gaya endorse, topiknya 3 cara SEO. Buatkan timeline dan index.html HyperFrames.
 
@@ -213,8 +218,8 @@ Langkahnya sama di Mac dan Windows.
    `npx hyperframes render -o video.mp4` di folder file tersebut (butuh Node.js dan ffmpeg).
 
 **Catatan Cara 2**
-- Di chat biasa skill bernama `edukasi-video-endorse` (bukan `claude-education-skill`), karena unggahan skill
-  di aplikasi Claude membatasi deskripsi 200 karakter dan bisa menolak nama yang memuat kata "claude".
+- Di chat biasa nama skill-nya juga `education-skill`. Bedanya hanya deskripsi yang lebih pendek
+  (unggahan skill di aplikasi Claude membatasi deskripsi 200 karakter).
 - Paket Team/Enterprise: admin harus mengizinkan skill dan code execution di **Organization settings**.
 - Update: hapus skill lama di **Customize → Skills**, lalu unggah ZIP versi terbaru.
 
@@ -222,14 +227,14 @@ Langkahnya sama di Mac dan Windows.
 
 | Gejala | Solusi |
 |---|---|
-| `/claude-education-skill` tidak ada di daftar `/` | Pastikan file ada di `~/.claude/skills/claude-education-skill/SKILL.md` (Windows: `%USERPROFILE%\.claude\skills\claude-education-skill\SKILL.md`) — bukan bertingkat dua folder — lalu tutup penuh dan buka ulang Claude Desktop. |
+| `/education-skill` tidak ada di daftar `/` | Pastikan file ada di `~/.claude/skills/education-skill/SKILL.md` (Windows: `%USERPROFILE%\.claude\skills\education-skill\SKILL.md`) — bukan bertingkat dua folder — lalu tutup penuh dan buka ulang Claude Desktop. |
 | `cek alat` bilang `node`/`ffmpeg` tidak ditemukan | Tutup dan buka ulang Claude Desktop setelah memasang alat (PATH baru belum terbaca). Windows: log out/log in bila perlu. |
 | Unggah ZIP gagal "Missing SKILL.md" | Unggah ZIP dari Releases apa adanya; jangan ZIP ulang seluruh repo. |
 | Unggah ZIP gagal karena code execution | Nyalakan **Code execution and file creation** di Settings → Capabilities. |
 
 ## Cek bahwa skill sudah terpasang
 
-Di Claude Code ketik `/` lalu `claude-edu` — `/claude-education-skill` harus muncul di daftar.
+Di Claude Code ketik `/` lalu `education` — `/education-skill` harus muncul di daftar.
 Atau jalankan `/skills` untuk melihat semua skill yang aktif.
 
 ## Cara pakai
@@ -237,26 +242,26 @@ Atau jalankan `/skills` untuk melihat semua skill yang aktif.
 ### Memanggil dengan perintah
 
 ```
-/claude-education-skill <video> [remotion|hyperframes] [topik / catatan]
+/education-skill <video> [remotion|hyperframes] [topik / catatan]
 ```
 
 Contoh:
 
 ```
-/claude-education-skill D:\video\tips-seo.mov remotion topiknya 3 cara website muncul di Google
+/education-skill D:\video\tips-seo.mov remotion topiknya 3 cara website muncul di Google
 ```
 
 ```
-/claude-education-skill rekaman-panjang.mp4 hyperframes video 16:9, buat infografis tiap poin
+/education-skill rekaman-panjang.mp4 hyperframes video 16:9, buat infografis tiap poin
 ```
 
 ```
-/claude-education-skill demo
+/education-skill demo
 ```
 (menampilkan contoh bawaan tanpa video — cocok untuk mencoba pertama kali)
 
 ```
-/claude-education-skill cek alat
+/education-skill cek alat
 ```
 (mengecek Node, ffmpeg, Python, faster-whisper)
 
@@ -281,7 +286,7 @@ Claude juga memakai skill ini sendiri bila permintaannya cocok, tanpa perlu `/`:
 Dari folder hasil `git clone`:
 
 ```bash
-S="$PWD/claude-education-skill/skills/claude-education-skill"   # lokasi skill
+S="$PWD/claude-education-skill/skills/education-skill"   # lokasi skill
 
 # 1. Siapkan proyek Remotion
 cp -r "$S/templates/remotion" my-video && cd my-video && npm install
