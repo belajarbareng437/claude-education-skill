@@ -1,6 +1,7 @@
 ---
-name: edit-video-endorse
+name: claude-education-skill
 description: Edit video talking-head mentah (vertikal 9:16 atau 16:9, bahasa Indonesia) jadi video tips/edukasi bergaya "endorse" — aksen hijau lime, kartu pembuka/penutup serif di kertas bertitik, subtitle gaya Apple 2–3 kata (kata muncul satu per satu, blur ke tajam), judul poin pil kaca + ikon mengapung, infografis layar penuh (angka menghitung, daftar ✓/✗, chip, toggle, split, bottom-sheet), framing lebar/close-up bergantian, SFX swoosh/pop/tik tanpa musik — dan merendernya dengan Remotion atau HyperFrames (HTML + GSAP). Gunakan setiap kali user ingin mengedit/membuat video "gaya endorse", video review/promosi produk atau jasa, video "N cara/tips/langkah", infografis layar penuh, subtitle gaya Apple, atau menyebut Remotion/HyperFrames untuk video talking-head — walaupun kata "skill" tidak disebut.
+argument-hint: "<video> [remotion|hyperframes] [topik/catatan] | demo | cek alat"
 ---
 
 # Edit video: gaya "endorse"
@@ -15,7 +16,25 @@ Dari satu video mentah orang bicara ke kamera, hasilkan video tips bergaya denga
 
 Kalau user tidak menyebut mesin, pakai **Remotion**. Bicara ke user dalam **Bahasa Indonesia**, singkat dan non-teknis.
 
-`SKILL_DIR` di bawah = folder skill ini (ditampilkan saat skill dimuat). Sebelum mendesain adegan,
+## Saat dipanggil dengan `/claude-education-skill`
+
+Argumen dari user: `$ARGUMENTS`
+
+| Argumen | Yang dilakukan |
+|---|---|
+| kosong | Sapa singkat, jelaskan 1 kalimat apa yang skill ini buat, lalu tanya: path video, mesin (Remotion/HyperFrames), topik. |
+| `cek alat` / `doctor` | Jalankan `scripts/doctor.py`, laporkan yang kurang beserta perintah pasangnya. Berhenti di situ. |
+| `demo` | Salin `templates/remotion/` ke folder kerja, `npm install`, render 3–4 still dari timeline demo bawaan, tunjukkan ke user. Tawarkan `npx remotion studio`. |
+| path video (+ `remotion`/`hyperframes`, topik) | Jalankan **Alur kerja** di bawah dengan video itu. Mesin tak disebut → Remotion. |
+| teks lain | Anggap sebagai permintaan perubahan pada video yang sedang dikerjakan di sesi ini; bila tidak ada, tanya video mana. |
+
+Path video bisa berisi spasi atau tanda kutip — ambil apa adanya dan cek dulu dengan `ffprobe` sebelum lanjut.
+
+## Lokasi
+
+`SKILL_DIR` di bawah = folder skill ini (baris "Base directory for this skill" saat skill dimuat;
+bisa di `~/.claude/skills/` atau di cache plugin). Jangan menulis hasil kerja ke dalam `SKILL_DIR` —
+buat folder kerja terpisah. Perintah Python: `python` di Windows, `python3` di macOS/Linux. Sebelum mendesain adegan,
 baca `references/style.md` (gaya visual) dan `references/timeline.md` (format data).
 
 ## Persyaratan

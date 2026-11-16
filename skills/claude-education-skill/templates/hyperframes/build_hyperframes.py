@@ -18,7 +18,8 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SKILL = os.path.dirname(os.path.dirname(HERE))
-ICONS = json.load(open(os.path.join(SKILL, "templates", "remotion", "src", "icons.json"), encoding="utf-8"))
+with open(os.path.join(SKILL, "templates", "remotion", "src", "icons.json"), encoding="utf-8") as _f:
+    ICONS = json.load(_f)
 
 # Sama dengan templates/remotion/src/theme.ts dan references/style.md
 THEME = {

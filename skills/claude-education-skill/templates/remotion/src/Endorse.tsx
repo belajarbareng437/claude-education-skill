@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { AbsoluteFill, Audio, cancelRender, continueRender, delayRender, OffthreadVideo, Sequence, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
+import { AbsoluteFill, Html5Audio, cancelRender, continueRender, delayRender, OffthreadVideo, Sequence, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import { loadFont } from "@remotion/fonts";
 import type { Scene, Sfx, Timeline } from "./types";
-import { COLORS, layout } from "./theme";
+import { COLORS } from "./theme";
 import { FONTS, SUBTITLE_FAMILY } from "./fonts";
 import { Subtitles } from "./components/Subtitles";
 import { FloatIcons, PointTitle, SerifCard } from "./components/Cards";
@@ -36,7 +36,7 @@ const MainVideo: React.FC<{ tl: Timeline }> = ({ tl }) => {
         }}
       />
       {/* Gradasi tipis di bawah agar subtitle putih tetap terbaca */}
-      <AbsoluteFill style={{ background: `linear-gradient(transparent ${layout(width, height).landscape ? 55 : 55}%, rgba(0,0,0,.35))` }} />
+      <AbsoluteFill style={{ background: `linear-gradient(transparent 55%, rgba(0,0,0,.35))` }} />
     </AbsoluteFill>
   );
 };
@@ -122,7 +122,7 @@ export const Endorse: React.FC<EndorseProps> = ({ timeline }) => {
         })}
       {sfx.map((x, i) => (
         <Sequence key={`s${i}`} from={Math.max(0, Math.round(x.t * fps))} durationInFrames={Math.round(fps * 0.6)} layout="none">
-          <Audio src={staticFile(`sfx/${x.kind}.wav`)} volume={x.volume ?? 0.6} />
+          <Html5Audio src={staticFile(`sfx/${x.kind}.wav`)} volume={x.volume ?? 0.6} />
         </Sequence>
       ))}
     </AbsoluteFill>

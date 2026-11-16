@@ -143,7 +143,6 @@ const Toggle: React.FC<{ c: Extract<FullscreenContent, { kind: "toggle" }>; fg: 
           borderRadius: 999,
           background: on > 0.5 ? COLORS.lime : "rgba(255,255,255,.18)",
           position: "relative",
-          transition: "none",
         }}
       >
         <div

@@ -6,7 +6,7 @@
     {
       "name": "edukasi-video",
       "source": "./",
-      "description": "edit-video-endorse: dari video talking-head mentah jadi video tips vertikal bergaya, dirender dengan Remotion atau HyperFrames."
+      "description": "/claude-education-skill: dari video talking-head mentah jadi video tips vertikal bergaya, dirender dengan Remotion atau HyperFrames."
     }
   ]
 }

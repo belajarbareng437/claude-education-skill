@@ -14,16 +14,16 @@ bergantian, plus SFX swoosh/pop/tik tanpa musik.
 ## Isi repo
 
 ```
-.claude-plugin/              manifest plugin + marketplace (untuk /plugin install)
-skills/edit-video-endorse/
-├── SKILL.md                 instruksi untuk Claude (alur kerja, aturan gaya)
+.claude-plugin/                manifest plugin + marketplace (untuk /plugin install)
+skills/claude-education-skill/
+├── SKILL.md                   instruksi untuk Claude (alur kerja, aturan gaya)
 ├── references/
-│   ├── style.md             panduan visual: warna, huruf, ukuran, animasi, ritme
-│   └── timeline.md          format timeline.json (satu data untuk dua mesin)
-├── scripts/                 Python: doctor, transcribe, cut_pauses, captions, make_sfx, stills
+│   ├── style.md               panduan visual: warna, huruf, ukuran, animasi, ritme
+│   └── timeline.md            format timeline.json (satu data untuk dua mesin)
+├── scripts/                   Python: doctor, transcribe, cut_pauses, captions, make_sfx, stills
 └── templates/
-    ├── remotion/            proyek Remotion siap pakai (baca public/timeline.json)
-    └── hyperframes/         build_hyperframes.py → index.html untuk HyperFrames
+    ├── remotion/              proyek Remotion siap pakai (baca public/timeline.json)
+    └── hyperframes/           build_hyperframes.py → index.html untuk HyperFrames
 ```
 
 ## Yang perlu dipasang
@@ -36,15 +36,19 @@ skills/edit-video-endorse/
 | ffmpeg | potong jeda, audio, cek hasil | Windows `winget install Gyan.FFmpeg` · macOS `brew install ffmpeg` · Ubuntu `sudo apt install ffmpeg` |
 | faster-whisper | transkripsi per kata | `pip install faster-whisper` |
 
-Cek semuanya sekaligus setelah skill terpasang:
+Setelah skill terpasang, cek semuanya dengan mengetik di Claude Code:
 
-```bash
-python skills/edit-video-endorse/scripts/doctor.py
 ```
+/claude-education-skill cek alat
+```
+
+(atau dari folder hasil clone: `python skills/claude-education-skill/scripts/doctor.py`)
 
 ## Cara instal
 
-### Opsi A — sebagai plugin (disarankan)
+Pilih **salah satu** opsi. Keduanya membuat skill bisa dipanggil dengan **`/claude-education-skill`**.
+
+### Opsi A — sebagai plugin (disarankan, mudah di-update)
 
 Di terminal:
 
@@ -60,14 +64,25 @@ Atau dari dalam Claude Code:
 /plugin install edukasi-video@edukasi-video
 ```
 
-Mulai ulang Claude Code (atau jalankan `/reload-plugins`). Skill bisa dipanggil dengan
-`/edukasi-video:edit-video-endorse`, dan Claude juga memakainya sendiri saat Anda minta mengedit video.
+Lalu mulai ulang Claude Code (atau ketik `/reload-plugins`).
+
+> Kenapa nama pluginnya `edukasi-video`, bukan `claude-education-skill`? Claude Code melarang nama **plugin**
+> yang diawali `claude-` (dicadangkan untuk Anthropic). Nama **skill**-nya tetap `claude-education-skill`,
+> jadi perintahnya tetap `/claude-education-skill`. Bentuk lengkapnya `/edukasi-video:claude-education-skill`
+> — pakai bentuk ini kalau ada skill lain bernama sama.
 
 Memperbarui ke versi terbaru:
 
 ```bash
 claude plugin marketplace update edukasi-video
 claude plugin update edukasi-video@edukasi-video
+```
+
+Menghapus:
+
+```bash
+claude plugin uninstall edukasi-video@edukasi-video
+claude plugin marketplace remove edukasi-video
 ```
 
 ### Opsi B — salin folder skill secara manual
@@ -80,64 +95,104 @@ git clone https://github.com/belajarbareng437/claude-education-skill.git
 
 ```bash
 mkdir -p ~/.claude/skills
-cp -r claude-education-skill/skills/edit-video-endorse ~/.claude/skills/
+cp -r claude-education-skill/skills/claude-education-skill ~/.claude/skills/
 ```
 
 **Windows (PowerShell)**
 
 ```powershell
 New-Item -ItemType Directory -Force "$env:USERPROFILE\.claude\skills" | Out-Null
-Copy-Item -Recurse claude-education-skill\skills\edit-video-endorse "$env:USERPROFILE\.claude\skills\"
+Copy-Item -Recurse claude-education-skill\skills\claude-education-skill "$env:USERPROFILE\.claude\skills\"
 ```
 
 Untuk satu proyek saja, salin ke `<proyek>/.claude/skills/` alih-alih folder home.
-Skill lalu dipanggil dengan `/edit-video-endorse`.
+Mulai ulang Claude Code. Jangan pasang Opsi A dan B bersamaan, supaya tidak ada dua skill bernama sama.
+
+### Cek bahwa skill sudah terpasang
+
+Di Claude Code ketik `/` lalu `claude-edu` — `/claude-education-skill` harus muncul di daftar.
+Atau jalankan `/skills` untuk melihat semua skill yang aktif.
 
 ## Cara pakai
 
-Cukup minta dalam bahasa biasa di Claude Code, misalnya:
+### Memanggil dengan perintah
+
+```
+/claude-education-skill <video> [remotion|hyperframes] [topik / catatan]
+```
+
+Contoh:
+
+```
+/claude-education-skill D:\video\tips-seo.mov remotion topiknya 3 cara website muncul di Google
+```
+
+```
+/claude-education-skill rekaman-panjang.mp4 hyperframes video 16:9, buat infografis tiap poin
+```
+
+```
+/claude-education-skill demo
+```
+(menampilkan contoh bawaan tanpa video — cocok untuk mencoba pertama kali)
+
+```
+/claude-education-skill cek alat
+```
+(mengecek Node, ffmpeg, Python, faster-whisper)
+
+Kalau mesin tidak disebut, dipakai **Remotion**.
+
+### Atau minta dengan bahasa biasa
+
+Claude juga memakai skill ini sendiri bila permintaannya cocok, tanpa perlu `/`:
 
 > Edit video `D:\video\tips-seo.mov` gaya endorse pakai Remotion. Topiknya 3 cara website muncul di Google.
 
-> Pakai HyperFrames, video 16:9 `rekaman-panjang.mp4`, buat infografis tiap poin.
+### Yang terjadi setelah dipanggil
 
-Claude akan: transkripsi → potong jeda → menyusun adegan di `timeline.json` → menunjukkan storyboard
-(gambar diam) → **menunggu persetujuan Anda** → render MP4.
+1. Transkripsi per kata → potong jeda otomatis.
+2. Claude menyusun adegan di `timeline.json` (kartu pembuka, judul poin, infografis, kartu penutup).
+3. Claude menunjukkan **storyboard** (gambar diam) + daftar "yang perlu dicek".
+4. **Render penuh hanya setelah Anda bilang "oke render"/"setuju".**
+5. Hasil MP4 dicek durasi dan frame-nya, lalu dilaporkan.
 
 ### Menjalankan manual (tanpa Claude)
 
+Dari folder hasil `git clone`:
+
 ```bash
-S=skills/edit-video-endorse            # lokasi skill
+S="$PWD/claude-education-skill/skills/claude-education-skill"   # lokasi skill
 
 # 1. Siapkan proyek Remotion
-cp -r $S/templates/remotion my-video && cd my-video && npm install
+cp -r "$S/templates/remotion" my-video && cd my-video && npm install
 
 # 2. Transkripsi + potong jeda
-python -I ../$S/scripts/transcribe.py ../mentah.mp4 words.json --prompt "SEO, Google, Search Console"
-python -I ../$S/scripts/cut_pauses.py ../mentah.mp4 words.json public/cut.mp4 words_cut.json
+python -I "$S/scripts/transcribe.py" ../mentah.mp4 words.json --prompt "SEO, Google, Search Console"
+python -I "$S/scripts/cut_pauses.py" ../mentah.mp4 words.json public/cut.mp4 words_cut.json
 
 # 3. Tulis adegan di public/timeline.json (lihat references/timeline.md), set "video": "cut.mp4", lalu:
-python -I ../$S/scripts/captions.py words_cut.json public/timeline.json
+python -I "$S/scripts/captions.py" words_cut.json public/timeline.json
 
 # 4. Preview & render
 npx remotion studio                                   # pratinjau di browser
 npx remotion render Endorse out/video.mp4 --codec=h264 --crf=18
 ```
 
-Dengan **HyperFrames** (langkah 1–3 sama, tapi pakai folder biasa, bukan `public/`):
+Dengan **HyperFrames** (langkah 2–3 sama, tapi file di folder biasa, bukan `public/`):
 
 ```bash
-python -I $S/templates/hyperframes/build_hyperframes.py my-hf/timeline.json my-hf/index.html
+python -I "$S/templates/hyperframes/build_hyperframes.py" my-hf/timeline.json my-hf/index.html
 cd my-hf
 npx hyperframes lint .
 npx hyperframes preview
 npx hyperframes render -o out/video.mp4
 ```
 
-Ingin melihat contohnya dulu tanpa video? Template Remotion sudah berisi `public/timeline.json` demo:
+Melihat contoh demo tanpa video:
 
 ```bash
-cd skills/edit-video-endorse/templates/remotion && npm install && npx remotion studio
+cd "$S/templates/remotion" && npm install && npx remotion studio
 ```
 
 ## Font

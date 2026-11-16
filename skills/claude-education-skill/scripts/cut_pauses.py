@@ -110,13 +110,17 @@ def main():
         tf.write("\n".join(parts))
         script = tf.name
     try:
-        cmd = ["ffmpeg", "-y", "-v", "error", "-stats", "-i", a.src, "-/filter_complex", script, "-map", "[v]"]
+        tail = ["-map", "[v]"]
         if has_audio:
-            cmd += ["-map", "[a]", "-c:a", "aac", "-b:a", "192k", "-ar", "48000"]
-        cmd += ["-c:v", "libx264", "-preset", "medium", "-crf", str(a.crf), "-pix_fmt", "yuv420p",
-                "-color_primaries", "bt709", "-color_trc", "bt709", "-colorspace", "bt709",
-                "-movflags", "+faststart", a.out]
-        subprocess.run(cmd, check=True)
+            tail += ["-map", "[a]", "-c:a", "aac", "-b:a", "192k", "-ar", "48000"]
+        tail += ["-c:v", "libx264", "-preset", "medium", "-crf", str(a.crf), "-pix_fmt", "yuv420p",
+                 "-color_primaries", "bt709", "-color_trc", "bt709", "-colorspace", "bt709",
+                 "-movflags", "+faststart", a.out]
+        head = ["ffmpeg", "-y", "-v", "error", "-stats", "-i", a.src]
+        # ffmpeg >= 7 memakai "-/filter_complex <file>"; versi lama memakai -filter_complex_script.
+        if subprocess.run(head + ["-/filter_complex", script] + tail).returncode != 0:
+            print("Mencoba ulang dengan -filter_complex_script (ffmpeg versi lama)...")
+            subprocess.run(head + ["-filter_complex_script", script] + tail, check=True)
     finally:
         os.unlink(script)
     print(f"-> {a.out}\n-> {a.out_words}")
